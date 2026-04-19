@@ -104,6 +104,71 @@ button {
   text-align: center;
 }
 
+const entryExitDiv = document.getElementById("entryExit");
+const attendanceBody = document.querySelector("#attendance tbody");
+
+// Track people status
+const peopleState = {};
+
+// Simulated face recognition events
+setInterval(() => {
+  const names = ["John", "Alice", "Bob", "Unknown"];
+  const name = names[Math.floor(Math.random() * names.length)];
+
+  const isKnown = name !== "Unknown";
+  const status = Math.random() > 0.5 ? "entry" : "exit";
+
+  const event = {
+    name,
+    status,
+    time: new Date().toLocaleTimeString()
+  };
+
+  handleEntryExit(event);
+}, 6000);
+
+// Handle entry/exit logic
+function handleEntryExit(event) {
+  addEntryExitUI(event);
+  updateAttendance(event);
+
+  // Add to main ledger also
+  addToLedger({
+    type: event.status,
+    source: event.name,
+    time: event.time
+  });
+}
+
+// UI display
+function addEntryExitUI(event) {
+  const div = document.createElement("div");
+
+  let className = event.status;
+  if (event.name === "Unknown") className = "visitor";
+
+  div.className = className;
+
+  div.innerText = `${event.name} ${event.status.toUpperCase()} (${event.time})`;
+
+  entryExitDiv.prepend(div);
+}
+
+// Attendance logic
+function updateAttendance(event) {
+  const row = document.createElement("tr");
+
+  let label = event.status.toUpperCase();
+  if (event.name === "Unknown") label = "VISITOR";
+
+  row.innerHTML = `
+    <td>${event.name}</td>
+    <td>${label}</td>
+    <td>${event.time}</td>  `;
+
+  attendanceBody.prepend(row);
+}
+
 #recordingStatus {
   color: lightgreen;
 }
