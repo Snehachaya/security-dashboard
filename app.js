@@ -69,6 +69,65 @@ function addThreat(event) {
   threatsDiv.prepend(div);
 }
 
+//Dashcam & Road Safety Mode
+const dashcamDiv = document.getElementById("dashcam");
+const sosStatus = document.getElementById("sosStatus");
+const recordingStatus = document.getElementById("recordingStatus");
+
+// Simulated dashcam events
+setInterval(() => {
+  const types = ["crash", "distance"];
+  const type = types[Math.floor(Math.random() * types.length)];
+
+  const event = {
+    type,
+    source: "Vehicle Cam",
+    time: new Date().toLocaleTimeString()
+  };
+
+  addDashcamEvent(event);
+  addToLedger(event);
+
+  if (type === "crash") {
+    triggerSOS(event);
+  }
+
+}, 7000);
+
+// Show dashcam event
+function addDashcamEvent(event) {
+  const div = document.createElement("div");
+  div.className = event.type;
+
+  div.innerText = `${event.type.toUpperCase()} detected (${event.time})`;
+  dashcamDiv.prepend(div);
+}
+
+// SOS + Voice + Recording simulation
+function triggerSOS(event) {
+  sosStatus.innerText = "🚨 SOS SENT!";
+  sosStatus.style.color = "red";
+
+  recordingStatus.innerText = "Recording: ON 🎥";
+
+  // Simulated voice alert
+  speak("Crash detected. Sending SOS alert.");
+
+  setTimeout(() => {
+    sosStatus.innerText = "Status: Normal";
+    sosStatus.style.color = "white";
+
+    recordingStatus.innerText = "Recording: OFF";
+  }, 6000);
+}
+
+// Voice alert (browser TTS)
+function speak(text) {
+  const msg = new SpeechSynthesisUtterance(text);
+  speechSynthesis.speak(msg);
+}
+
+
 // Ledger entry
 function addToLedger(event) {
   const row = document.createElement("tr");
