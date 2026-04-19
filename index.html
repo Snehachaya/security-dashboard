@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>AI Security Dashboard</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <header>
+    <h1>🔐 AI Security Dashboard</h1>
+  </header>
+
+  <main>
+    <section class="card">
+      <h2>📷 Live Camera</h2>
+      <div id="cameraFeed">Connecting...</div>
+    </section>
+
+    <section class="card">
+      <h2>🚨 Alerts</h2>
+      <div id="alerts"></div>
+    </section>
+
+    <section class="card full">
+      <h2>⚙️ Processing Pipeline</h2>
+      <div class="pipeline">
+        Camera → Detection → Face Recognition → Known/Unknown → Event → Alert → Ledger
+      </div>
+    </section>
+
+    <section class="card full">
+      <h2>🎛 Controls</h2>
+      <button onclick="triggerAlarm()">Trigger Alarm</button>
+      <button onclick="startTalk()">Two-Way Talk</button>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>

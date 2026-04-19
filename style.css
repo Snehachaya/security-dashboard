@@ -1,0 +1,59 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  background: #0f172a;
+  color: #fff;
+}
+
+header {
+  padding: 15px;
+  background: #020617;
+  text-align: center;
+}
+
+main {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+  padding: 15px;
+}
+
+.card {
+  background: #1e293b;
+  padding: 15px;
+  border-radius: 12px;
+}
+
+.full {
+  grid-column: span 2;
+}
+
+#cameraFeed {
+  height: 250px;
+  background: black;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.alert {
+  padding: 10px;
+  margin: 8px 0;
+  border-radius: 8px;
+}
+
+.known {
+  background: #065f46;
+}
+
+.unknown {
+  background: #7f1d1d;
+}
+
+button {
+  margin-right: 10px;
+  padding: 10px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
