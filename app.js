@@ -127,6 +127,16 @@ function speak(text) {
   speechSynthesis.speak(msg);
 }
 
+#assets div {
+  padding: 10px;
+  margin: 5px 0;
+  border-radius: 6px;
+}
+
+.object { background: #2563eb; }        /* detected */
+.missing { background: #b91c1c; }       /* missing */
+.unattended { background: #d97706; }    /* left behind */
+
 
 // Ledger entry
 function addToLedger(event) {
