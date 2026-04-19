@@ -169,6 +169,47 @@ function updateAttendance(event) {
   attendanceBody.prepend(row);
 }
 
+//Object & Asset Monitoring
+const assetsDiv = document.getElementById("assets");
+
+// Simulated object detection
+setInterval(() => {
+  const objects = ["Bag", "Laptop", "Box", "Vehicle"];
+  const states = ["object", "missing", "unattended"];
+
+  const object = objects[Math.floor(Math.random() * objects.length)];
+  const state = states[Math.floor(Math.random() * states.length)];
+
+  const event = {
+    object,
+    state,
+    time: new Date().toLocaleTimeString()
+  };
+
+  addAssetEvent(event);
+  addToLedger({
+    type: state,
+    source: object,
+    time: event.time
+  });
+
+}, 6500);
+
+// UI display
+function addAssetEvent(event) {
+  const div = document.createElement("div");
+  div.className = event.state;
+
+  let label = "";
+  if (event.state === "object") label = "Detected";
+  if (event.state === "missing") label = "Missing";
+  if (event.state === "unattended") label = "Unattended";
+
+  div.innerText = `${event.object} ${label} (${event.time})`;
+
+  assetsDiv.prepend(div);
+}
+
 #recordingStatus {
   color: lightgreen;
 }
