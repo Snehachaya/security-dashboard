@@ -1,11 +1,11 @@
 body {
   margin: 0;
-  font-family: "Segoe UI", Arial, sans-serif;
+  font-family: Inter, sans-serif;
   background: #0f172a;
   color: #e2e8f0;
 }
 
-.container { display: flex; }
+.layout { display: flex; }
 
 .sidebar {
   width: 220px;
@@ -14,39 +14,37 @@ body {
   height: 100vh;
 }
 
+.sidebar li { list-style: none; margin: 10px 0; opacity: 0.7; cursor: pointer; }
+.sidebar .active { color: #38bdf8; opacity: 1; }
+
 .main { flex: 1; padding: 20px; }
 
-.topbar {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 10px;
-}
+.topbar { display: flex; justify-content: space-between; }
+.live { color: #22c55e; }
 
-.status { color: #22c55e; }
-
-/* Status Bar */
-.status-bar {
-  display: flex;
-  justify-content: space-around;
-  background: #1e293b;
-  padding: 10px;
-  border-radius: 10px;
-  margin-bottom: 15px;
-}
-
-.grid {
+.stats {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 15px;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  margin: 20px 0;
 }
 
+.stat-card { background: #1e293b; padding: 15px; border-radius: 10px; }
+.green { border-left: 4px solid #22c55e; }
+.red { border-left: 4px solid #ef4444; }
+.blue { border-left: 4px solid #3b82f6; }
+
+.grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; }
 .full { grid-column: span 2; }
 
 .card {
   background: #1e293b;
   padding: 15px;
   border-radius: 12px;
+  transition: 0.2s;
 }
+
+.card:hover { transform: translateY(-3px); }
 
 .camera-grid {
   display: grid;
@@ -54,9 +52,9 @@ body {
   gap: 10px;
 }
 
-.camera-box {
+.cam {
+  background: black;
   height: 120px;
-  background: #000;
   border-radius: 10px;
   display: flex;
   align-items: center;
@@ -64,22 +62,13 @@ body {
 }
 
 .alert {
+  background: #334155;
   padding: 8px;
-  margin: 5px 0;
+  margin: 6px 0;
   border-radius: 6px;
 }
 
-.time {
-  font-size: 11px;
-  color: #94a3b8;
-}
+.time { font-size: 10px; color: #94a3b8; }
 
-table {
-  width: 100%;
-  border-collapse: collapse;
-}
-
-td, th {
-  padding: 6px;
-  border: 1px solid #334155;
-}
+table { width: 100%; border-collapse: collapse; }
+th, td { padding: 6px; border-bottom: 1px solid #334155; }
