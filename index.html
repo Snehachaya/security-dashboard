@@ -1,87 +1,72 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>AI Security Dashboard</title>
-  <link rel="stylesheet" href="style.css" />
+<meta charset="UTF-8">
+<title>Premium Security Dashboard</title>
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<div class="container">
+<div class="layout">
 
   <aside class="sidebar">
     <h2>🔐 Security AI</h2>
-    <ul>
-      <li>🏠 Home</li>
-      <li>🏢 Business</li>
-      <li>🚗 Vehicle</li>
-    </ul>
+    <nav>
+      <a href="#">🏠 Home</a>
+      <a href="#">📊 Analytics</a>
+      <a href="#">🎥 Cameras</a>
+    </nav>
   </aside>
 
-  <div class="main">
+  <main class="main">
 
     <header class="topbar">
-      <h1>AI Security Dashboard</h1>
-      <span class="status">● Live Monitoring</span>
+      <h1>Security Command Center</h1>
+      <span class="live">● LIVE</span>
     </header>
 
-    <!-- Status Summary -->
-    <div class="status-bar">
-      <div>📷 Cameras: <span id="camCount">3</span></div>
-      <div>👤 Entries: <span id="totalEntry">0</span></div>
-      <div>🚪 Exits: <span id="totalExit">0</span></div>
-      <div>⚠️ Unknown: <span id="unknownCount">0</span></div>
-    </div>
+    <section class="stats">
+      <div>📷 Cameras <b>3</b></div>
+      <div>👤 Entries <b id="entry">0</b></div>
+      <div>🚪 Exits <b id="exit">0</b></div>
+      <div>⚠️ Unknown <b id="unknown">0</b></div>
+    </section>
 
-    <div class="grid">
+    <section class="cameras">
+      <div class="cam">Front Door</div>
+      <div class="cam">Parking</div>
+      <div class="cam">Office</div>
+    </section>
 
-      <section class="card full">
-        <h2>📷 Multi-Camera View</h2>
-        <div class="camera-grid">
-          <div class="camera-box">Front Door Cam</div>
-          <div class="camera-box">Parking Cam</div>
-          <div class="camera-box">Office Cam</div>
-        </div>
-      </section>
+    <section class="grid">
+      <div class="card">
+        <h3>🏠 Home Security</h3>
+        <div id="home"></div>
+      </div>
 
-      <section class="card full">
-        <h2>🏠 Home & Small Business Security</h2>
-        <div id="homeSecurity"></div>
-      </section>
+      <div class="card">
+        <h3>🛡 Threat Detection</h3>
+        <div id="threat"></div>
+      </div>
 
-      <section class="card">
-        <h2>🛡 Threat Detection</h2>
-        <div id="threats"></div>
-      </section>
+      <div class="card">
+        <h3>🚗 Dashcam</h3>
+        <div id="dash"></div>
+      </div>
 
-      <section class="card">
-        <h2>🚗 Dashcam & Road Safety</h2>
-        <div id="dashcam"></div>
-      </section>
+      <div class="card">
+        <h3>📦 Assets</h3>
+        <div id="asset"></div>
+      </div>
+    </section>
 
-      <section class="card">
-        <h2>🧠 Smart Human Analytics</h2>
-        <div id="entryExit"></div>
-      </section>
+    <section class="card">
+      <h3>📊 Ledger</h3>
+      <table id="ledger"><tbody></tbody></table>
+    </section>
 
-      <section class="card">
-        <h2>📦 Object & Asset Monitoring</h2>
-        <div id="assets"></div>
-      </section>
+  </main>
 
-      <section class="card full">
-        <h2>📊 Ledger</h2>
-        <table id="ledger">
-          <thead>
-            <tr><th>Time</th><th>Type</th><th>Source</th></tr>
-          </thead>
-          <tbody></tbody>
-        </table>
-      </section>
-
-    </div>
-
-  </div>
 </div>
 
 <script src="app.js"></script>
