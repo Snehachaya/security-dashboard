@@ -1,22 +1,46 @@
 body {
-  font-family: Arial, sans-serif;
   margin: 0;
+  font-family: "Segoe UI", Arial, sans-serif;
   background: #0f172a;
-  color: #fff;
+  color: #e2e8f0;
 }
 
-header {
-  padding: 15px;
+.container { display: flex; }
+
+.sidebar {
+  width: 220px;
   background: #020617;
-  text-align: center;
+  padding: 20px;
+  height: 100vh;
 }
 
-main {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 15px;
-  padding: 15px;
+.main { flex: 1; padding: 20px; }
+
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
 }
+
+.status { color: #22c55e; }
+
+/* Status Bar */
+.status-bar {
+  display: flex;
+  justify-content: space-around;
+  background: #1e293b;
+  padding: 10px;
+  border-radius: 10px;
+  margin-bottom: 15px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 15px;
+}
+
+.full { grid-column: span 2; }
 
 .card {
   background: #1e293b;
@@ -24,203 +48,38 @@ main {
   border-radius: 12px;
 }
 
-.full {
-  grid-column: span 2;
+.camera-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
 }
 
-#cameraFeed {
-  height: 250px;
-  background: black;
+.camera-box {
+  height: 120px;
+  background: #000;
+  border-radius: 10px;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
 .alert {
-  padding: 10px;
-  margin: 8px 0;
-  border-radius: 8px;
-}
-
-.known {
-  background: #065f46;
-}
-
-.unknown {
-  background: #7f1d1d;
-}
-
-button {
-  margin-right: 10px;
-  padding: 10px;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-}
-#threats div {
-  padding: 10px;
+  padding: 8px;
   margin: 5px 0;
   border-radius: 6px;
 }
 
-.fire { background: orange; }
-.animal { background: green; }
-.fight { background: crimson; }
-.crowd { background: purple; }
-.audio { background: teal; }
-
-#dashcam div {
-  padding: 10px;
-  margin: 5px 0;
-  border-radius: 6px;
+.time {
+  font-size: 11px;
+  color: #94a3b8;
 }
 
-.crash { background: red; }
-.distance { background: orange; }
-
-#sosStatus {
-  font-weight: bold;
-  margin-bottom: 10px;
-}
-
-#entryExit div {
-  padding: 10px;
-  margin: 5px 0;
-  border-radius: 6px;
-}
-
-.entry { background: green; }
-.exit { background: gray; }
-.visitor { background: darkred; }
-
-#attendance {
+table {
   width: 100%;
   border-collapse: collapse;
 }
 
-#attendance th, #attendance td {
-  border: 1px solid #444;
-  padding: 8px;
-  text-align: center;
-}
-
-const entryExitDiv = document.getElementById("entryExit");
-const attendanceBody = document.querySelector("#attendance tbody");
-
-// Track people status
-const peopleState = {};
-
-// Simulated face recognition events
-setInterval(() => {
-  const names = ["John", "Alice", "Bob", "Unknown"];
-  const name = names[Math.floor(Math.random() * names.length)];
-
-  const isKnown = name !== "Unknown";
-  const status = Math.random() > 0.5 ? "entry" : "exit";
-
-  const event = {
-    name,
-    status,
-    time: new Date().toLocaleTimeString()
-  };
-
-  handleEntryExit(event);
-}, 6000);
-
-// Handle entry/exit logic
-function handleEntryExit(event) {
-  addEntryExitUI(event);
-  updateAttendance(event);
-
-  // Add to main ledger also
-  addToLedger({
-    type: event.status,
-    source: event.name,
-    time: event.time
-  });
-}
-
-// UI display
-function addEntryExitUI(event) {
-  const div = document.createElement("div");
-
-  let className = event.status;
-  if (event.name === "Unknown") className = "visitor";
-
-  div.className = className;
-
-  div.innerText = `${event.name} ${event.status.toUpperCase()} (${event.time})`;
-
-  entryExitDiv.prepend(div);
-}
-
-// Attendance logic
-function updateAttendance(event) {
-  const row = document.createElement("tr");
-
-  let label = event.status.toUpperCase();
-  if (event.name === "Unknown") label = "VISITOR";
-
-  row.innerHTML = `
-    <td>${event.name}</td>
-    <td>${label}</td>
-    <td>${event.time}</td>  `;
-
-  attendanceBody.prepend(row);
-}
-
-//Object & Asset Monitoring
-const assetsDiv = document.getElementById("assets");
-
-// Simulated object detection
-setInterval(() => {
-  const objects = ["Bag", "Laptop", "Box", "Vehicle"];
-  const states = ["object", "missing", "unattended"];
-
-  const object = objects[Math.floor(Math.random() * objects.length)];
-  const state = states[Math.floor(Math.random() * states.length)];
-
-  const event = {
-    object,
-    state,
-    time: new Date().toLocaleTimeString()
-  };
-
-  addAssetEvent(event);
-  addToLedger({
-    type: state,
-    source: object,
-    time: event.time
-  });
-
-}, 6500);
-
-// UI display
-function addAssetEvent(event) {
-  const div = document.createElement("div");
-  div.className = event.state;
-
-  let label = "";
-  if (event.state === "object") label = "Detected";
-  if (event.state === "missing") label = "Missing";
-  if (event.state === "unattended") label = "Unattended";
-
-  div.innerText = `${event.object} ${label} (${event.time})`;
-
-  assetsDiv.prepend(div);
-}
-
-#recordingStatus {
-  color: lightgreen;
-}
-
-#ledger {
-  width: 100%;
-  border-collapse: collapse;
-}
-
-#ledger th, #ledger td {
-  border: 1px solid #444;
-  padding: 8px;
-  text-align: center;
+td, th {
+  padding: 6px;
+  border: 1px solid #334155;
 }

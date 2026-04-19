@@ -7,94 +7,83 @@
 </head>
 <body>
 
-  
-  <header>
-    <h1>🔐 AI Security Dashboard</h1>
-  </header>
+<div class="container">
 
-  <main>
-    <section class="card">
-      <h2>📷 Live Camera</h2>
-      <div id="cameraFeed">Connecting...</div>
-    </section>
+  <aside class="sidebar">
+    <h2>🔐 Security AI</h2>
+    <ul>
+      <li>🏠 Home</li>
+      <li>🏢 Business</li>
+      <li>🚗 Vehicle</li>
+    </ul>
+  </aside>
 
-    <section class="card">
-      <h2>🚨 Alerts</h2>
-      <div id="alerts"></div>
-    </section>
-<section class="card">
-  <h2>🛡 Threat Detection</h2>
-  <div id="threats"></div>
-</section>
+  <div class="main">
 
-    <section class="card">
-  <h2>🚗 Dashcam & Road Safety</h2>
-  <div id="dashcam"></div>
-</section>
+    <header class="topbar">
+      <h1>AI Security Dashboard</h1>
+      <span class="status">● Live Monitoring</span>
+    </header>
 
-    <section class="card">
-  <h2>👤 Entry / Exit Tracking</h2>
-  <div id="entryExit"></div>
-</section>
+    <!-- Status Summary -->
+    <div class="status-bar">
+      <div>📷 Cameras: <span id="camCount">3</span></div>
+      <div>👤 Entries: <span id="totalEntry">0</span></div>
+      <div>🚪 Exits: <span id="totalExit">0</span></div>
+      <div>⚠️ Unknown: <span id="unknownCount">0</span></div>
+    </div>
 
-<section class="card full">
-  <h2>📋 Attendance / Visitor Log</h2>
-  <table id="attendance">
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>Status</th>
-        <th>Time</th>
-      </tr>
-    </thead>
-    <tbody></tbody>
-  </table>
-</section>
-//Object & Asset Monitoring
-    <section class="card">
-  <h2>📦 Object & Asset Monitoring</h2>
-  <div id="assets"></div>
-</section>
-    
-<section class="card full">
-  <h2>🚨 SOS & Recording</h2>
-  <div id="sosStatus">Status: Normal</div>
-  <div id="recordingStatus">Recording: OFF</div>
-</section>
-    
-<section class="card full" id="emergencyBanner" style="display:none; background:red;">
-  <h2>🚨 EMERGENCY ALERT</h2>
-  <p id="emergencyText"></p>
-</section>
+    <div class="grid">
 
-<section class="card full">
-  <h2>📊 Event Ledger</h2>
-  <table id="ledger">
-    <thead>
-      <tr>
-        <th>Time</th>
-        <th>Type</th>
-        <th>Source</th>
-      </tr>
-    </thead>
-    <tbody></tbody>
-  </table>
-</section>
-    
-    <section class="card full">
-      <h2>⚙️ Processing Pipeline</h2>
-      <div class="pipeline">
-        Camera → Detection → Face Recognition → Known/Unknown → Event → Alert → Ledger
-      </div>
-    </section>
+      <section class="card full">
+        <h2>📷 Multi-Camera View</h2>
+        <div class="camera-grid">
+          <div class="camera-box">Front Door Camera</div>
+          <div class="camera-box">Parking Camera</div>
+          <div class="camera-box">Office Camera</div>
+        </div>
+      </section>
 
-    <section class="card full">
-      <h2>🎛 Controls</h2>
-      <button onclick="triggerAlarm()">Trigger Alarm</button>
-      <button onclick="startTalk()">Two-Way Talk</button>
-    </section>
-  </main>
+      <section class="card full">
+        <h2>🏠 Home & Small Business Security</h2>
+        <div id="homeSecurity"></div>
+      </section>
 
-  <script src="app.js"></script>
+      <section class="card">
+        <h2>🛡 Threat Detection</h2>
+        <div id="threats"></div>
+      </section>
+
+      <section class="card">
+        <h2>🚗 Dashcam & Road Safety</h2>
+        <div id="dashcam"></div>
+      </section>
+
+      <section class="card">
+        <h2>🧠 Smart Human Analytics</h2>
+        <div id="entryExit"></div>
+      </section>
+
+      <section class="card">
+        <h2>📦 Object & Asset Monitoring</h2>
+        <div id="assets"></div>
+      </section>
+
+      <section class="card full">
+        <h2>📊 Ledger</h2>
+        <table id="ledger">
+          <thead>
+            <tr><th>Time</th><th>Type</th><th>Source</th></tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </section>
+
+    </div>
+
+  </div>
+</div>
+
+<script src="app.js"></script>
 </body>
 </html>

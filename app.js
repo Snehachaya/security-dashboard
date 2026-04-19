@@ -1,162 +1,66 @@
-const alertsDiv = document.getElementById("alerts");
-const cameraFeed = document.getElementById("cameraFeed");
+const cameras=["Front Door","Parking","Office"];
+const people=["John","Alice","Unknown"];
+const homeDiv=document.getElementById("homeSecurity");
+const ledger=document.querySelector("#ledger tbody");
 
-cameraFeed.innerHTML = "📡 Camera Stream Active";
+let entry=0, exit=0, unknown=0;
 
-setInterval(() => {
-  const isKnown = Math.random() > 0.5;
-
-  const event = {
-    camera: "Front Door",
-    person: isKnown ? "John" : "Unknown",
-    status: isKnown ? "known" : "unknown",
-    time: new Date().toLocaleTimeString()
-  };
-
-  addAlert(event);
-}, 3000);
-
-function addAlert(event) {
-  const div = document.createElement("div");
-  div.className = `alert ${event.status}`;
-
-  div.innerHTML = `
-    <strong>${event.camera}</strong><br/>
-    ${event.person} - ${event.time}
-  `;
-
-  alertsDiv.prepend(div);
+function add(id,text,time){
+  const div=document.createElement("div");
+  div.className="alert";
+  div.innerHTML=`${text}<div class="time">${time}</div>`;
+  const el=document.getElementById(id);
+  el.prepend(div);
+  if(el.children.length>10) el.removeChild(el.lastChild);
 }
 
-function triggerAlarm() {
-  alert("🚨 Alarm Triggered!");
+function log(e){
+  const row=document.createElement("tr");
+  row.innerHTML=`<td>${e.time}</td><td>${e.type}</td><td>${e.source}</td>`;
+  ledger.prepend(row);
+  if(ledger.children.length>10) ledger.removeChild(ledger.lastChild);
 }
 
-function startTalk() {
-  alert("🎤 Two-way talk started");
-}
+setInterval(()=>{
+  const cam=cameras[Math.floor(Math.random()*cameras.length)];
+  const time=new Date().toLocaleTimeString();
+  const mode=Math.floor(Math.random()*4);
 
-const threatsDiv = document.getElementById("threats");
-const ledgerBody = document.querySelector("#ledger tbody");
-const emergencyBanner = document.getElementById("emergencyBanner");
-const emergencyText = document.getElementById("emergencyText");
+  if(mode===0){
+    const name=people[Math.floor(Math.random()*people.length)];
+    const known=name!=="Unknown";
+    const type=Math.random()>0.5?"entry":"exit";
 
-// Simulated threat events
-setInterval(() => {
-  const types = ["fire", "animal", "fight", "crowd", "audio"];
-  const type = types[Math.floor(Math.random() * types.length)];
+    add("homeSecurity",`<b>${name}</b> (${known?"Known":"Unknown"})<br>${type} | ${cam}`,time);
+    add("entryExit",`${name} ${type} - ${cam}`,time);
 
-  const event = {
-    type,
-    source: "Camera 1",
-    time: new Date().toLocaleTimeString()
-  };
+    if(type==="entry"){entry++; document.getElementById("totalEntry").innerText=entry;}
+    else{exit++; document.getElementById("totalExit").innerText=exit;}
 
-  addThreat(event);
-  addToLedger(event);
+    if(!known){unknown++; document.getElementById("unknownCount").innerText=unknown;}
 
-  if (type === "fire" || type === "fight") {
-    triggerEmergency(event);
+    log({time,type,source:name});
   }
 
-}, 5000);
-
-// Add threat UI
-function addThreat(event) {
-  const div = document.createElement("div");
-  div.className = event.type;
-  div.innerText = `${event.type.toUpperCase()} detected (${event.time})`;
-  threatsDiv.prepend(div);
-}
-
-//Dashcam & Road Safety Mode
-const dashcamDiv = document.getElementById("dashcam");
-const sosStatus = document.getElementById("sosStatus");
-const recordingStatus = document.getElementById("recordingStatus");
-
-// Simulated dashcam events
-setInterval(() => {
-  const types = ["crash", "distance"];
-  const type = types[Math.floor(Math.random() * types.length)];
-
-  const event = {
-    type,
-    source: "Vehicle Cam",
-    time: new Date().toLocaleTimeString()
-  };
-
-  addDashcamEvent(event);
-  addToLedger(event);
-
-  if (type === "crash") {
-    triggerSOS(event);
+  if(mode===1){
+    const t=["fire","fight","crowd"];
+    const type=t[Math.floor(Math.random()*t.length)];
+    add("threats",`${type} - ${cam}`,time);
+    log({time,type,source:cam});
   }
 
-}, 7000);
+  if(mode===2){
+    const t=["crash","distance"];
+    const type=t[Math.floor(Math.random()*t.length)];
+    add("dashcam",`${type} - ${cam}`,time);
+    log({time,type,source:cam});
+  }
 
-// Show dashcam event
-function addDashcamEvent(event) {
-  const div = document.createElement("div");
-  div.className = event.type;
+  if(mode===3){
+    const t=["object","missing","unattended"];
+    const type=t[Math.floor(Math.random()*t.length)];
+    add("assets",`${type} - ${cam}`,time);
+    log({time,type,source:cam});
+  }
 
-  div.innerText = `${event.type.toUpperCase()} detected (${event.time})`;
-  dashcamDiv.prepend(div);
-}
-
-// SOS + Voice + Recording simulation
-function triggerSOS(event) {
-  sosStatus.innerText = "🚨 SOS SENT!";
-  sosStatus.style.color = "red";
-
-  recordingStatus.innerText = "Recording: ON 🎥";
-
-  // Simulated voice alert
-  speak("Crash detected. Sending SOS alert.");
-
-  setTimeout(() => {
-    sosStatus.innerText = "Status: Normal";
-    sosStatus.style.color = "white";
-
-    recordingStatus.innerText = "Recording: OFF";
-  }, 6000);
-}
-
-// Voice alert (browser TTS)
-function speak(text) {
-  const msg = new SpeechSynthesisUtterance(text);
-  speechSynthesis.speak(msg);
-}
-
-#assets div {
-  padding: 10px;
-  margin: 5px 0;
-  border-radius: 6px;
-}
-
-.object { background: #2563eb; }        /* detected */
-.missing { background: #b91c1c; }       /* missing */
-.unattended { background: #d97706; }    /* left behind */
-
-
-// Ledger entry
-function addToLedger(event) {
-  const row = document.createElement("tr");
-
-  row.innerHTML = `
-    <td>${event.time}</td>
-    <td>${event.type}</td>
-    <td>${event.source}</td>
-  `;
-
-  ledgerBody.prepend(row);
-}
-
-// Emergency trigger
-function triggerEmergency(event) {
-  emergencyBanner.style.display = "block";
-  emergencyText.innerText = `${event.type.toUpperCase()} detected! Immediate action required!`;
-
-  setTimeout(() => {
-    emergencyBanner.style.display = "none";
-  }, 5000);
-}
+},2000);
