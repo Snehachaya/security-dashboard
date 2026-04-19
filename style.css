@@ -57,3 +57,25 @@ button {
   border-radius: 8px;
   cursor: pointer;
 }
+#threats div {
+  padding: 10px;
+  margin: 5px 0;
+  border-radius: 6px;
+}
+
+.fire { background: orange; }
+.animal { background: green; }
+.fight { background: crimson; }
+.crowd { background: purple; }
+.audio { background: teal; }
+
+#ledger {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+#ledger th, #ledger td {
+  border: 1px solid #444;
+  padding: 8px;
+  text-align: center;
+}
